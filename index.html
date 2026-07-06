@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Age Calculator</title>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --background: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        input[type="date"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input[type="date"]:focus {
+            border-color: var(--primary-color);
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: #4338ca;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 15px;
+            background: #f9fafb;
+            border-left: 5px solid var(--primary-color);
+            border-radius: 4px;
+            display: none;
+        }
+
+        .result p {
+            margin: 8px 0;
+            font-size: 18px;
+        }
+
+        /* Ad Styles */
+        .ad-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 15px 0;
+            padding: 10px;
+            background: #e5e7eb;
+            text-align: center;
+            border: 1px dashed #9ca3af;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #6b7280;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. TOP AD PLACEHOLDER -->
+    <div class="ad-container">
+        <p>--- Advertisement (Top Banner) ---</p>
+        <!-- Apna AdSense Code Yahan Paste Karein -->
+    </div>
+
+    <div class="container">
+        <h1>Age Calculator</h1>
+        
+        <div class="input-group">
+            <label for="dob">Select Your Date of Birth:</label>
+            <input type="date" id="dob" required>
+        </div>
+
+        <button onclick="calculateAge()">Calculate Age</button>
+
+        <!-- 2. INSIDE CARD AD PLACEHOLDER (Best for CTR) -->
+        <div class="ad-container" style="margin-top: 20px;">
+            <p>--- Advertisement (Native Ad) ---</p>
+            <!-- Apna AdSense Code Yahan Paste Karein -->
+        </div>
+
+        <div class="result" id="resultBox">
+            <p><strong>Years:</strong> <span id="years">0</span></p>
+            <p><strong>Months:</strong> <span id="months">0</span></p>
+            <p><strong>Days:</strong> <span id="days">0</span></p>
+        </div>
+    </div>
+
+    <!-- 3. BOTTOM AD PLACEHOLDER -->
+    <div class="ad-container">
+        <p>--- Advertisement (Bottom Banner) ---</p>
+        <!-- Apna AdSense Code Yahan Paste Karein -->
+    </div>
+
+    <script>
+        // Set maximum date to today so users can't select future dates
+        document.getElementById('dob').max = new Date().toISOString().split("T")[0];
+
+        function calculateAge() {
+            const dobInput = document.getElementById('dob').value;
+            if (!dobInput) {
+                alert("Please select a date first!");
+                return;
+            }
+
+            const dob = new Date(dobInput);
+            const today = new Date();
+
+            let years = today.getFullYear() - dob.getFullYear();
+            let months = today.getMonth() - dob.getMonth();
+            let days = today.getDate() - dob.getDate();
+
+            // Adjust days and months if negative
+            if (days < 0) {
+                months--;
+                // Get days in previous month
+                const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+                days += prevMonth;
+            }
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            // Display Results
+            document.getElementById('years').innerText = years;
+            document.getElementById('months').innerText = months;
+            document.getElementById('days').innerText = days;
+            document.getElementById('resultBox').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
